@@ -1,0 +1,13 @@
+com/xiutech/simix/modelo/Administrador.class
+com/xiutech/simix/modelo/CalificacionId.class
+com/xiutech/simix/modelo/Comentarista.class
+com/xiutech/simix/modelo/Informador.class
+com/xiutech/simix/modelo/ComentarioId.class
+com/xiutech/simix/modelo/AbstractDAO.class
+com/xiutech/simix/modelo/HibernateUtil.class
+com/xiutech/simix/modelo/Tema.class
+com/xiutech/simix/controlador/RegistrarseController.class
+com/xiutech/simix/modelo/Marcador.class
+com/xiutech/simix/modelo/InformadorDAO.class
+com/xiutech/simix/modelo/Calificacion.class
+com/xiutech/simix/modelo/Comentario.class
