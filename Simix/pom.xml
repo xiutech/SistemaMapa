@@ -36,7 +36,12 @@
             <artifactId>primefaces-extensions</artifactId>
             <version>6.2.2</version>
         </dependency>
-       
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.6</version>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -49,6 +54,11 @@
             <version>9.3-1100-jdbc3</version>
         </dependency>
         
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.0</version>
+        </dependency>
         
     </dependencies>
 
