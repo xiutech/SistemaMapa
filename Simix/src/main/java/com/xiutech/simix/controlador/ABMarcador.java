@@ -8,17 +8,37 @@ package com.xiutech.simix.controlador;
 import com.xiutech.simix.modelo.Marcador;
 import com.xiutech.simix.modelo.MarcadorDAO;
 import com.xiutech.simix.modelo.Tema;
+import com.xiutech.simix.modelo.TemaDAO;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 /**
  *
  * @author fercho117
  */
+@ManagedBean
 public class ABMarcador {
+
     private double longitud;
     private double latitud;
     private String descripcion;
+    private String datosUtiles;
+    private String tema;
+    
+    /**
+     * @return the tema
+     */
+    public String getTema() {
+        return tema;
+    }
 
+    /**
+     * @param tema the tema to set
+     */
+    public void setTema(String tema) {
+        this.tema = tema;
+    }
+    
     /**
      * @return the longitud
      */
@@ -61,24 +81,69 @@ public class ABMarcador {
         this.descripcion = descripcion;
     }
 
-    public void agregaMarcador(){
+    public String agregaMarcador(){
         MarcadorDAO mdb =new MarcadorDAO();
-        Marcador marcador = mdb.buscaPorCoord(latitud, longitud);
-        /**
-         * Envia mensaje de error, marcador repetido
-         * if(m!= null){
+        Marcador marcador = mdb.buscaPorLatLng(latitud, longitud);
+        if(marcador!= null){
             this.descripcion ="";
-            Mensajes.fatal("Ya existe un marcador con estas cordenadas \n" +"Lat: "+this.latitud +" Lng: "+this.longitud);
+            Mensajes.error("Ya existe un marcador con estas cordenadas \n" +"Lat: "+this.latitud +" Lng: "+this.longitud);
             return "";
         }
-        */
         marcador = new Marcador();
         marcador.setDescripcion(descripcion);
+        marcador.setDatosUtiles(datosUtiles);
         marcador.setLatitud(latitud);
         marcador.setLongitud(longitud);
+        TemaDAO udbT = new TemaDAO();
+        Tema temaO = udbT.find(this.tema);
+        if(temaO == null){
+            this.descripcion ="";
+            Mensajes.error("El tema no existe");
+            return "";
+        }
+        marcador.setTema(temaO);
         mdb.save(marcador);
-        //this.descripcion =""; why?
-        //refresh
+        Mensajes.info("Marcador añadido");
+        return "/informador/agregaMarcador?faces-redirect=true";
+    }
+
+        public String agregaMarcadorNuevoTema(){
+        MarcadorDAO mdb =new MarcadorDAO();
+        Marcador marcador = mdb.buscaPorLatLng(latitud, longitud);
+        if(marcador!= null){
+            this.descripcion ="";
+            Mensajes.error("Ya existe un marcador con estas cordenadas \n" +"Lat: "+this.latitud +" Lng: "+this.longitud);
+            return "";
+        }
+        marcador = new Marcador();
+        marcador.setDescripcion(descripcion);
+        marcador.setDatosUtiles(datosUtiles);
+        marcador.setLatitud(latitud);
+        marcador.setLongitud(longitud);
+        TemaDAO udbT = new TemaDAO();
+        Tema temaO = udbT.find(this.tema);
+        if(temaO == null){
+            this.descripcion ="";
+            Mensajes.error("El tema no existe");
+            return "";
+        }
+        marcador.setTema(temaO);
+        mdb.save(marcador);
+        return "/informador/agregaMarcador?faces-redirect=true";
+    }
+    
+    /**
+     * @return the datosUtiles
+     */
+    public String getDatosUtiles() {
+        return datosUtiles;
+    }
+
+    /**
+     * @param datosUtiles the datosUtiles to set
+     */
+    public void setDatosUtiles(String datosUtiles) {
+        this.datosUtiles = datosUtiles;
     }
     
     

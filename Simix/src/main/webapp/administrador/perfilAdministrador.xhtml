@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <f:view>
+        <h:head>
+            <title>Principal Administrador</title>
+            <h:outputStylesheet name="CSS/estilos.css"/>
+                <h:form id="logout">    
+                    <h4>Bienvenido #{user.nombre}</h4>
+                    <p:commandButton action="#{iniciarSesionController.logout()}" value="logout"/>
+                </h:form>
+        </h:head>
+        <h:body>   
+            <header>
+                <h1>SIMIX</h1>
+            </header>
+            <main>
+                <section>
+                    
+                </section>
+                <aside>
+                    
+                    <UL>
+                        <LI><a href="AInformadorIH.xhtml">Agrega Informador</a></LI>
+                        <LI>Eliminar Informador</LI>
+                        <LI>Eliminar Tema</LI>
+                        <LI>Eliminar Comentario</LI>
+                        <LI>Eliminar Comentarista</LI>
+                    </UL>
+                </aside>
+            </main>
+            <footer>
+                Hola
+            </footer>
+            <script>
+                
+            </script>
+        </h:body>
+    </f:view>
+</html>
+
+

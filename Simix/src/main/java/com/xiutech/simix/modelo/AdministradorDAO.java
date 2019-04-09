@@ -6,6 +6,10 @@
 package com.xiutech.simix.modelo;
 
 import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -40,5 +44,73 @@ public class AdministradorDAO extends AbstractDAO<Administrador>{
     public List<Administrador> findAll(){
         return super.findAll(Administrador.class);
     }
+ 
+    public List<Administrador> buscaPorNombre(String nombre){
+//        if(nombre.equals(""))
+//            return null;
+        List<Administrador> usuarios =null;
+        Session session = this.sessionFactory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            String hql = "From Administrador  u where u.nombre like concat('%',:nombre,'%')";
+            Query query = session.createQuery(hql);
+            query.setParameter("nombre", nombre);
+            usuarios = (List<Administrador>)query.list();
+            tx.commit();
+        }catch(HibernateException e){
+            if(tx!=null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }finally{
+            session.close();
+        }
+        return usuarios;
+    }
     
+    public Administrador buscaPorCorreoContrasenia(String correo,String contrasenia){
+        Administrador u =null;
+        Session session = this.sessionFactory.openSession();
+        Transaction tx =null;
+        try{
+            tx = session.beginTransaction();
+            String hql = "from Administrador where correo = :correo and contrasenia = :contrasenia";
+            Query query = session.createQuery(hql);
+            query.setParameter("correo", correo);
+            query.setParameter("contrasenia",contrasenia);
+            u = (Administrador)query.uniqueResult();
+            tx.commit();
+        }catch(HibernateException e){
+            if(tx!=null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }finally{
+            session.close();
+        }
+        return u;
+    }
+    
+    public Administrador buscaPorCorreo(String correo){
+        Administrador u =null;
+        Session session = this.sessionFactory.openSession();
+        Transaction tx =null;
+        try{
+            tx = session.beginTransaction();
+            String hql = "from Administrador where correo = :correo";
+            Query query = session.createQuery(hql);
+            query.setParameter("correo", correo);
+            u = (Administrador)query.uniqueResult();
+            tx.commit();
+        }catch(HibernateException e){
+            if(tx!=null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }finally{
+            session.close();
+        }
+        return u;
+}
 }

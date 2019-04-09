@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+        <f:view contentType="text/html">
+        <h:head>
+            <title>Inicio</title>
+            <h:outputStylesheet name="CSS/estilos.css"/>
+        </h:head>
+        <h:body>
+            <header>
+                <h:form id="logout">
+                    <p:commandButton action="#{iniciarSesionController.logout()}" value="logout"/>
+                </h:form>
+            </header>
+            <main>
+                <section>
+                </section>
+                <aside>
+                    <h1>Menú</h1>
+                    <br />
+                    <UL>
+                        <LI><a href="agregaTema.xhtml">Agrega Tema</a></LI>
+                        <LI><a href="agregaMarcador.xhtml">Agrega Marcador</a></LI>
+                        <LI>Mis temas</LI>
+                        <LI>Mis marcadores</LI>
+                    </UL>
+                </aside>
+            </main>
+            <footer>
+                <h3>
+                    <center> © 2019, XiuTech, Todos los derechos reservados</center>
+                </h3>
+            </footer>
+        </h:body>
+    </f:view>
+</html>

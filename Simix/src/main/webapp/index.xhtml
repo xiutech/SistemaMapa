@@ -9,6 +9,10 @@
           <h:head>
             <title>Inicio</title>
             <h:outputStylesheet name="CSS/estilos.css"/>
+            <h:form id="login_reg">
+                <p:commandButton action="login?faces-redirect=true" value="Iniciar sesión"/>
+                <p:commandButton action="RegistrarseIH?faces-redirect=true" value="Registrarse"/>
+            </h:form>
         </h:head>
         <h:body>
             <header>
@@ -20,19 +24,7 @@
                 </section>
 
                 <aside>
-                    <h1>Menú</h1>
-                    <br />
-                    <UL>
-                        <LI><a href="Admin/AInformadorIH.xhtml">Alta Informador</a></LI>
-                        <LI><a href="RegistrarseIH.xhtml">Registrarse</a></LI>
-                        <LI>Opcion 3</LI>
-                        <LI>Opcion 4</LI>
-                        <LI>Opcion 5</LI>
-                        <LI>Opcion 6</LI>
-                        <LI>Opcion 7</LI>
-                        <LI>Opcion 8</LI>
-                    </UL>
-
+                    
                 </aside>
             </main>
             <footer>
