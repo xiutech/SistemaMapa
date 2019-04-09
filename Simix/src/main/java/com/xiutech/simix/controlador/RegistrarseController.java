@@ -5,8 +5,12 @@
  */
 package com.xiutech.simix.controlador;
 
+import com.xiutech.simix.modelo.Administrador;
+import com.xiutech.simix.modelo.AdministradorDAO;
 import com.xiutech.simix.modelo.Comentarista;
 import com.xiutech.simix.modelo.ComentaristaDAO;
+import com.xiutech.simix.modelo.Informador;
+import com.xiutech.simix.modelo.InformadorDAO;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
 
@@ -65,14 +69,28 @@ public class RegistrarseController {
             //correo encriptado en base64
             String codigo = new String(Base64.encodeBase64(getCorreo().getBytes()));
             // link de activacion que enviara al comentarista
-            String link = "http://localhost:8084/Simix/activar_cuenta.xhtml?faces-redirect=true&codigo=" + codigo;
+            String link = "http://localhost:8084/Simix/ActivarCuentaIH.xhtml?faces-redirect=true&codigo=" + codigo;
             Comentarista c = new Comentarista();
-            c.setNombre(nombre);
-            c.setCorreo(correo);
-            c.setContrasenia(contrasenia);
+            c.setNombre(this.getNombre());
+            c.setCorreo(this.getCorreo());
+            c.setContrasenia(this.getContrasenia());
             c.setEstado(false);
 
             ComentaristaDAO udb = new ComentaristaDAO();
+            
+            
+            // Verifica que no haya usuarios con el mismo correo, en caso contrario
+            // lanza una excepcion
+            Comentarista c2 = udb.find(c.getCorreo()); 
+            InformadorDAO iudb = new InformadorDAO();  
+            Informador i2 = iudb.find(c.getCorreo());       
+            AdministradorDAO audb = new AdministradorDAO();          
+            Administrador a2 = audb.find(c.getCorreo());         
+            if(c2!=null || i2!=null || a2 != null){
+                mensaje_error = "Ya existe el usuario";
+                throw new RuntimeException("Ya existe el usuario");
+            }
+            
             udb.save(c);
 
             //envia el correo 
@@ -87,14 +105,14 @@ public class RegistrarseController {
             String CLIENT_SECRET = "";
             String REFRESH_TOKEN = "";
             //String FROM_USER_ACCESSTOKEN = em.getAccessTokenFromRefreshToken(CLIENT_ID,CLIENT_SECRET, REFRESH_TOKEN);
-            String FROM_USER_ACCESSTOKEN = "ya29.GlzlBqmLvKrLbRR93KonUaJ63ZA3ZYrxO0tcOlSirYcmFHA6qxp4TYzysZPTdh5K6nWJCWOfWvcVVgmXrjDUsLfJkY4ZmGlUd-Yokj34ObdfopY3_3yMkdSlodXhUw";
+            String FROM_USER_ACCESSTOKEN = "ya29.GlzmBk2SZ0cBWYdfjwNlX4Gs4i6zohMKZqvmnszzVc5X7K4ahlopePXxqidNn6bvEahBm4FmEoH7YxLwZB2xwR3IwclVtb0hyMFuB44puqpdmLtlIPjC8lyzH706tw";
             String TO_USER_EMAIL = this.correo;
             em.sendMail(SMTP_SERVER_HOST, SMTP_SERVER_PORT, FROM_USER_EMAIL, FROM_USER_ACCESSTOKEN, FROM_USER_EMAIL, FROM_USER_FULLNAME, TO_USER_EMAIL, SUBJECT, BODY);
 
-            return "confirmacion_visitante?faces-redirect=true&mensaje=" + mensaje;
+            return "ConfirmacionVisitanteIH?faces-redirect=true&mensaje=" + mensaje;
         }
         catch(Exception e){
-            return "confirmacion_visitante?faces-redirect=true&mensaje=" + mensaje_error;
+            return "ConfirmacionVisitanteIH?faces-redirect=true&mensaje=" + mensaje_error;
         }
     }
     
@@ -115,10 +133,10 @@ public class RegistrarseController {
             c = udb.find(new String(Base64.decodeBase64(codigo)));
             c.setEstado(true);
             udb.update(c);
-            return "confirmacion_visitante?faces-redirect=true&mensaje=" + mensaje;
+            return "ConfirmacionVisitanteIH?faces-redirect=true&mensaje=" + mensaje;
         }
         catch(Exception e){
-            return "confirmacion_visitante?faces-redirect=true&mensaje=" + mensaje_error;
+            return "ConfirmacionVisitanteIH?faces-redirect=true&mensaje=" + mensaje_error;
         }
     }
 }
